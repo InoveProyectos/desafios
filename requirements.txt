@@ -1,3 +1,5 @@
 requests==2.27.1
 fastapi==0.78.0
 uvicorn==0.13.4
+mongoengine==0.26.0
+pymongo==4.3.3

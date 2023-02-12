@@ -5,8 +5,8 @@ import pathlib
 
 ROOT_DIR = pathlib.Path(__file__).resolve().parent.parent.parent
 
-PORT = int(os.environ.get("PORT", 9000))
+port = int(os.environ.get("PORT", 9000))
 
-MONGO = {
-    "uri": os.environ.get("MONGO_URI", "mongodb://localhost:27017"),
+mongo = {
+    "uri": os.environ.get("MONGO_URI", "mongodb://host.docker.internal:27017/challenges-dev"),
 }

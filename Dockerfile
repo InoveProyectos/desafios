@@ -11,4 +11,4 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD ["/bin/sh", "-c", "pytest -s && python -m uvicorn server.main:app --host 0.0.0.0 --port 9000 --reload"]
+CMD ["/bin/sh", "-c", "pytest -s && python -m uvicorn server.server:app --host 0.0.0.0 --port 9000 --reload"]
