@@ -6,7 +6,7 @@ from .config.environment import *
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from mongoengine import connect, errors
+from mongoengine import connect
 
 connect(host = mongo['uri'])
 

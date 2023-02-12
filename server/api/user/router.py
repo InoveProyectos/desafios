@@ -6,6 +6,6 @@ from .controller import get, create
 
 router = APIRouter()
 
-router.get("/{user_id}")(get)
+router.get("/:user_id", status_code = 200)(get)
 
-router.post("/")(create)
+router.post("/", status_code = 201)(create)
