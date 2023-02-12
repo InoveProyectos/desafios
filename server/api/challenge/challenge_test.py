@@ -1,4 +1,4 @@
 #!/usr/bin/env python
 
-def sample():
+def test_sample():
     assert True
