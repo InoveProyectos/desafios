@@ -1,5 +1,10 @@
 # Sistema de Desafíos
 
+# Requerimientos
+- Docker
+- docker-compose
+- Python >= 3.8
+
 # Levantar la aplicación
 ```bash
 docker-compose up
