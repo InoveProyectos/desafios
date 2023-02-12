@@ -13,7 +13,7 @@ async def get(user_id):
         user = User.objects.get(_id=user_id)
         return user.to_mongo().to_dict()
     except User.DoesNotExist:
-        return JSONResponse({"message": "User not found"}, status_code=400)
+        return JSONResponse({"message": "User not found"}, status_code=404)
 
 
 async def create(data: UserSchema):
