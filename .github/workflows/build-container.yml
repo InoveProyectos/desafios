@@ -1,0 +1,30 @@
+name: Build Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOCKER_BUILD_CONTEXT: .
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        context: ${{ env.DOCKER_BUILD_CONTEXT }}
+        tags: myimage
+
+    - name: Check if Docker image was built successfully
+      run: |
+        if [ "$(docker images -q myimage:latest 2> /dev/null)" == "" ]; then
+          echo "Docker image build failed!"
+          exit 1
+        fi
