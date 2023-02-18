@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from .handlers.register import register_handlers
-from .routes import router
+from .api.routes import router
 from .config.environment import *
+from .middleware.middleware import *
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,7 +10,7 @@ from mongoengine import connect
 
 connect(host = mongo['uri'])
 
-app = FastAPI()
+app = FastAPI(debug=True)
 
 origins = [
     "*"
@@ -24,5 +24,5 @@ app.add_middleware(
     allow_headers = ["*"],
 )
 
-register_handlers(app)
+app.middleware("http")(response_handler)
 app.include_router(router, prefix = "/api")
