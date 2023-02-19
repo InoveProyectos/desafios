@@ -5,7 +5,6 @@ from mongoengine import (
     StringField,
     IntField,
     SequenceField,
-    BooleanField,
     EmbeddedDocumentListField,
     EmbeddedDocument)
 
@@ -25,7 +24,7 @@ class User(Document):
     _id = SequenceField(required=True, primary_key=True, sequence_name="user_sequence")
     username = StringField(required=True, unique=True)
     score = IntField(required=True)
-    solution = EmbeddedDocumentListField(Solution, required=True, default=[])
+    solutions = EmbeddedDocumentListField(Solution, required=True, default=[])
 
     meta = {'collection': 'users'}
  

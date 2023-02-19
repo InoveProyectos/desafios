@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from ..api.challenge.model import Challenge, Solution, Test
+from ..api.challenge.model import Challenge, File
 from ..api.user.model import User
 
 ### example mongo challenge ###
@@ -8,21 +8,21 @@ from ..api.user.model import User
 challenge = Challenge(
     name='Mi primer Challenge',
     solution=[
-        Solution(
+        File(
             filename='archivo1.py',
             type='Python',
             content='print("Hola, Mundo!")',
-            clean_db=True,
-            encapsulate_in_fn=False,
-            avoid_main=False
         )
     ],
     tests=[
-        Test(
+        File(
             filename='test1.py',
             content='assert True'
         )
-    ]
+    ],
+    clean_db=True,
+    encapsulate_in_fn=False,
+    avoid_main=False
 )
 
 challenge.save()
@@ -31,7 +31,8 @@ challenge.save()
 
 user = User(
     username='tester',
-    score=70
+    score=70,
+    solutions=[]
 )
 
 user.save()
