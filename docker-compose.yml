@@ -6,4 +6,5 @@ services:
       - .:/opt/backend/
     environment:
       MONGO_URI: mongodb://localhost:27017/challenges-dev
+      WORKER_URI: http://localhost:9001
     network_mode: "host"

@@ -37,6 +37,12 @@ class ChallengeController:
     async def create(self, data: ChallengeSchema):
         solutions = [solution.dict() for solution in data.solution]
         tests = [test.dict() for test in data.tests]
+
+        """
+        TODO: Validar la solucion y los tests enviandolo al worker para que se
+        ejecuten. En caso de no ser exitoso, se debe lanzar una excepción (InvalidChallengeException)
+        """
+
         challenge = Challenge(name=data.name, solution=solutions, tests=tests)
         return challenge.save().to_mongo()
 

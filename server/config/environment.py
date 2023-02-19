@@ -10,3 +10,7 @@ port = int(os.environ.get("PORT", 9000))
 mongo = {
     "uri": os.environ.get("MONGO_URI", "mongodb://localhost:27017/challenges-dev"),
 }
+
+worker = {
+    "url" : os.environ.get("WORKER_URL", "http://localhost:9001"),
+}
