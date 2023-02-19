@@ -1,18 +1,10 @@
-from .model import Challenge, Solution
-from ..user.model import User
+from .model import Challenge, File
+from ..user.model import User, Solution
+from ..user.controller import UserController
 from pydantic import BaseModel
 from typing import List
 
-class ScriptFileSchema(BaseModel):
-    filename: str
-    type: str
-    content: str
-    clean_db: bool = False
-    encapsulate_in_fn: bool = False
-    avoid_main: bool = False
-
-
-class TestFileSchema(BaseModel):
+class FileSchema(BaseModel):
     filename: str
     type: str
     content: str
@@ -20,12 +12,15 @@ class TestFileSchema(BaseModel):
 
 class ChallengeSchema(BaseModel):
     name: str
-    solution: List[ScriptFileSchema]
-    tests: List[TestFileSchema]
+    solution: List[FileSchema]
+    tests: List[FileSchema]
+    clean_db: bool = False
+    encapsulate_in_fn: bool = False
+    avoid_main: bool = False
 
 
 class SubmissionSchema(BaseModel):
-    files: List[ScriptFileSchema]
+    files: List[FileSchema]
 
 
 class ChallengeController:
@@ -66,15 +61,19 @@ class ChallengeController:
 
     async def submit(self, challenge_id, user_id, solution: SubmissionSchema):
         challenge = Challenge.objects.get(_id=challenge_id)
-        user = User.objects.get(_id=user_id)
+        
+        solution_files = [File(**dict(file)).to_mongo() for file in solution.files]
+        challenge.solution = solution_files
 
-        solution = {"challenge_id": challenge_id, "solution": solution.files}
-
-        user.save()
         """
-        Validar la solución usando el worker. 
-        Agregar la solucion al user.
-        Actualizar el user score y retornar el resultado.
+        TODO: Validar la solución enviando el challenge al worker. Calcular el score obtenido
         """
+        UserController()._add_or_replace_solution(
+            user_id, 
+            # score_earned
+            Solution(challenge_id=challenge_id, files=solution_files))
 
+        """
+        TODO: Retornar resultados de ejecución de la solución.
+        """
         return {}

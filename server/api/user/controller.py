@@ -21,7 +21,7 @@ class UserController:
 
 
     async def create(self, data: UserSchema):
-        user = User(username=data.username, score=0)
+        user = User(username=data.username, score=0, solutions=[])
         return user.save().to_mongo()
 
 
@@ -33,3 +33,15 @@ class UserController:
     async def delete(self, user_id):
         user = User.objects.get(_id=user_id)
         return user.delete().to_mongo()
+
+
+    def _add_or_replace_solution(self, user_id, solution):
+        """
+        Agregar una solución al usuario, en caso de que ya existía una solución para ese
+        challenge_id, reemplazarla con los nuevos valores
+        """
+        user = User.objects.get(_id=user_id)
+        user.solutions = [s for s in user.solutions if s.challenge_id != solution.challenge_id]
+        user.solutions.append(solution)
+        user.save()
+        return user.to_mongo()

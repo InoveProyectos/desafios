@@ -18,13 +18,14 @@ class File(EmbeddedDocument):
 class Solution(EmbeddedDocument):
     challenge_id = IntField(required=True)
     files = EmbeddedDocumentListField(File, required=True)
+    score_earned = IntField(required=True)
 
 
 class User(Document):
     _id = SequenceField(required=True, primary_key=True, sequence_name="user_sequence")
     username = StringField(required=True, unique=True)
     score = IntField(required=True)
-    solutions = EmbeddedDocumentListField(Solution, required=True, default=[])
+    solutions = EmbeddedDocumentListField(Solution, default=[])
 
     meta = {'collection': 'users'}
  
