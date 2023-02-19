@@ -1,4 +1,5 @@
-from .model import Challenge
+from .model import Challenge, Solution
+from ..user.model import User
 from pydantic import BaseModel
 from typing import List
 
@@ -23,11 +24,16 @@ class ChallengeSchema(BaseModel):
     tests: List[TestFileSchema]
 
 
+class SubmissionSchema(BaseModel):
+    files: List[ScriptFileSchema]
+
+
 class ChallengeController:
 
     async def get_all(self):
         challenges = Challenge.objects.all()
         return [block.to_mongo() for block in challenges]
+
 
     async def get(self, challenge_id):
         challenge = Challenge.objects.get(_id=challenge_id)
@@ -56,3 +62,19 @@ class ChallengeController:
     async def delete(self, challenge_id):
         challenge = Challenge.objects.get(_id=challenge_id)
         return challenge.delete().to_mongo()
+
+
+    async def submit(self, challenge_id, user_id, solution: SubmissionSchema):
+        challenge = Challenge.objects.get(_id=challenge_id)
+        user = User.objects.get(_id=user_id)
+
+        solution = {"challenge_id": challenge_id, "solution": solution.files}
+
+        user.save()
+        """
+        Validar la solución usando el worker. 
+        Agregar la solucion al user.
+        Actualizar el user score y retornar el resultado.
+        """
+
+        return {}

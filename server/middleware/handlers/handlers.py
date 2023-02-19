@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from .errors import mongo, generic
-from mongoengine.errors import ValidationError, NotUniqueError
+from mongoengine.errors import ValidationError, NotUniqueError, DoesNotExist
 
 def map_handler(error):
     if isinstance(error, ValidationError):
@@ -10,4 +10,6 @@ def map_handler(error):
         return mongo.handle_unique_error
     if isinstance(error, ValueError):
         return generic.handle_value_error
+    if isinstance(error, DoesNotExist):
+        return mongo.handle_not_found_error
     return generic.handle_exception

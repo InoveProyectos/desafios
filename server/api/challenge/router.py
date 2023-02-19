@@ -17,3 +17,5 @@ router.post("/", status_code = 201)(controller.create)
 router.patch("/{challenge_id}", status_code = 200)(controller.update)
 
 router.delete("/{challenge_id}", status_code = 200)(controller.delete)
+
+router.post("/{challenge_id}/submit/{user_id}", status_code = 200)(controller.submit)
