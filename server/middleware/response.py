@@ -20,7 +20,7 @@ async def response_handler(request, call_next):
         response = await call_next(request)
     except Exception as e:
         return map_handler(e)(request, e)
-        
+
     if isinstance(response, JSONResponse):
         return response
 
@@ -30,12 +30,7 @@ async def response_handler(request, call_next):
         else:
             return response
     
-    print("AAAAAAAAAAAAAAAAAAAAAAaa")
-    print(dir(response))
-    print(response)
     if response.status_code == 500:
-        print(response)
-        print(dir(response))
         if request.app.debug:
             return JSONResponse(
                 content = __obj_to_dict__(response),

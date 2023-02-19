@@ -2,10 +2,18 @@
 
 from fastapi import APIRouter
 
-from .controller import get, create
+from .controller import *
 
 router = APIRouter()
 
-router.get("/{user_id}", status_code = 200)(get)
+controller = UserController()
 
-router.post("/", status_code = 201)(create)
+router.get("/", status_code = 200)(controller.get_all)
+
+router.get("/{user_id}", status_code = 200)(controller.get)
+
+router.post("/", status_code = 201)(controller.create)
+
+router.patch("/{user_id}", status_code = 200)(controller.update)
+
+router.delete("/{user_id}", status_code = 200)(controller.delete)

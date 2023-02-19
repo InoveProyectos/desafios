@@ -2,7 +2,7 @@
 
 from .api.routes import router
 from .config.environment import *
-from .middleware.middleware import *
+from .middleware.response import *
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

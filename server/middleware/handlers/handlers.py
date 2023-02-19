@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
-from .errors import routing, mongo, generic
+from .errors import mongo, generic
 from mongoengine.errors import ValidationError, NotUniqueError
-from fastapi.exceptions import HTTPException
 
 def map_handler(error):
     if isinstance(error, ValidationError):
