@@ -1,4 +1,4 @@
-# Sistema de Desafíos
+# Sistema de Desafíos - Alternativa NoSQL
 
 # Requerimientos
 - Docker

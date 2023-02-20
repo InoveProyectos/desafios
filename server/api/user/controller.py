@@ -41,7 +41,7 @@ class UserController:
         challenge_id, reemplazarla con los nuevos valores
         """
         user = User.objects.get(_id=user_id)
-        user.solutions = [s for s in user.solutions if s.challenge_id != solution.challenge_id]
+        user.solutions.filter(challenge_id=solution.challenge_id).delete()
         user.solutions.append(solution)
         user.save()
         return user.to_mongo()
