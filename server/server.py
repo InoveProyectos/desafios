@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from .api.routes import router
-from .config.environment import *
-from .middleware.response import *
+from .api import router as api_router
+from .config import *
+from .middleware import response_handler
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,4 +25,4 @@ app.add_middleware(
 )
 
 app.middleware("http")(response_handler)
-app.include_router(router, prefix = "/api")
+app.include_router(api_router, prefix = "/api")

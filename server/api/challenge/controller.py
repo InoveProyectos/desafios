@@ -27,7 +27,7 @@ class ChallengeController:
 
     async def get_all(self):
         challenges = Challenge.objects.all()
-        return [block.to_mongo() for block in challenges]
+        return [challenge.to_mongo() for challenge in challenges]
 
 
     async def get(self, challenge_id):
