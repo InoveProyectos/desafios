@@ -1,7 +1,7 @@
 services:
   server:
     build: .
-    container_name: challenges
+    container_name: desafios
     volumes:
       - .:/opt/backend/
     environment:

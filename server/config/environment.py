@@ -11,6 +11,6 @@ mongo = {
     "uri": os.environ.get("MONGO_URI", "mongodb://localhost:27017/challenges-dev"),
 }
 
-worker = {
+pyworker = {
     "url" : os.environ.get("WORKER_URL", "http://localhost:9001"),
 }
