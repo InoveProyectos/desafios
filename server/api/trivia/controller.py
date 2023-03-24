@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
-from .model import TriviaChallenge
-from pydantic import BaseModel
+import uuid
 from typing import List
+from pydantic import BaseModel
+from .model import TriviaChallenge
 from ..exceptions.RequestException import RequestException
+from ..domain.clients.redis import Redis
 
 class OptionSchema(BaseModel):
     text: str
@@ -17,6 +19,8 @@ class TriviaChallengeSchema(BaseModel):
 
 
 class TriviaChallengeController:
+    def __init__(self):
+        self.redis = Redis()
 
     def validate_challenge_options(self, options):
         if not any(option.is_correct for option in options):
@@ -48,3 +52,14 @@ class TriviaChallengeController:
     async def delete(self, id):
         challenge = TriviaChallenge.objects.get(id=id)
         return challenge.delete().to_mongo()
+    
+    
+    async def create_session(self, id):
+        challenge = self.get(id)
+        random_id = uuid.uuid4()
+        session = self.redis.set(random_id, challenge)
+        if not session:
+            raise RequestException("No se pudo crear la sesión", status_code=500)
+        challenge.session_id = random_id
+        return challenge
+    
