@@ -22,7 +22,7 @@ class Redis:
         """
         ttl: time to live in seconds
         """
-        return self._redis.set(key, value, ex=connections['redis']['ttl'])
+        return self._redis.set(key, value, ex=ttl)
     
     def delete(self, key):
         return self._redis.delete(key)

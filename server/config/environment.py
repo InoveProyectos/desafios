@@ -14,7 +14,7 @@ connections = {
     "redis": {
         "host": os.environ.get("REDIS_URI", "localhost"),
         "port": os.environ.get("REDIS_PORT", 6379),
-        "password": os.environ.get("REDIS_PASSWORD", "perritobarrios"),
+        "password": os.environ.get("REDIS_PASSWORD", ""),
         "ttl": int(os.environ.get("REDIS_TTL", 60 * 60 * 2)), # 2 hours
         "db": int(os.environ.get("REDIS_DB", 0))
     }
