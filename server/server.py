@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from mongoengine import connect
 
-connect(host = mongo['uri'])
+connect(host = connections['mongo']['uri'])
 
 app = FastAPI(debug=True)
 

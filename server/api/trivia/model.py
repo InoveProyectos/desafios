@@ -11,7 +11,7 @@ from mongoengine import (
 )
 
 class Option(EmbeddedDocument):
-    option = StringField(required=True)
+    text = StringField(required=True)
     is_correct = BooleanField(required=True)
 
 

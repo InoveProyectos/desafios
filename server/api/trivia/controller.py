@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 
-from .model import TriviaChallenge
-from pydantic import BaseModel
+import uuid
+import json
+import random
 from typing import List
-from ..exceptions.RequestException import RequestException
+from pydantic import BaseModel
+from .model import TriviaChallenge
+from ...domain.exceptions.RequestException import RequestException
+from ...domain.clients.redis import Redis
 
 class OptionSchema(BaseModel):
     text: str
@@ -17,6 +21,9 @@ class TriviaChallengeSchema(BaseModel):
 
 
 class TriviaChallengeController:
+    def __init__(self):
+        self.redis = Redis()
+
 
     def validate_challenge_options(self, options):
         if not any(option.is_correct for option in options):
@@ -24,27 +31,28 @@ class TriviaChallengeController:
 
 
     async def get_all(self):
-        challenges = TriviaChallenge.objects.all()
-        return [challenge.to_mongo() for challenge in challenges]
+        trivia_challenges = TriviaChallenge.objects.all()
+        return [trivia_challenge.to_mongo() for trivia_challenge in trivia_challenges]
     
 
-    async def get(self, id):
-        challenge = TriviaChallenge.objects.get(id=id)
-        return challenge.to_mongo()
+    async def get(self, id: int):
+        trivia_challenge = TriviaChallenge.objects.get(_id=id)
+        return trivia_challenge.to_mongo()
     
 
-    async def create(self, challenge: TriviaChallengeSchema):
-        self.validate(validate_challenge_options(challenge.options))
-        challenge = TriviaChallenge(**challenge).save()
-        return challenge.to_mongo()
+    async def create(self, trivia_challenge: TriviaChallengeSchema):
+        self.validate_challenge_options(trivia_challenge.options)
+        print(trivia_challenge.dict())
+        trivia_challenge = TriviaChallenge(**trivia_challenge.dict()).save()
+        return trivia_challenge.to_mongo()
 
     
-    async def update(self, id, challenge: TriviaChallengeSchema):
-        challenge = TriviaChallenge.objects.get(id=id)
-        challenge.update(**challenge)
-        return challenge.to_mongo()
+    async def update(self, id, trivia_challenge: TriviaChallengeSchema):
+        trivia_challenge = TriviaChallenge.objects.get(_id=id)
+        trivia_challenge.update(**challenge)
+        return trivia_challenge.to_mongo()
 
     
     async def delete(self, id):
-        challenge = TriviaChallenge.objects.get(id=id)
-        return challenge.delete().to_mongo()
+        trivia_challenge = TriviaChallenge.objects.get(_id=id)
+        return trivia_challenge.delete().to_mongo()

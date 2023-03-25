@@ -1,4 +1,4 @@
-name: Build Docker Image
+name: Build Docker Image and Run Tests
 
 on:
   push:
@@ -9,7 +9,7 @@ env:
   DOCKER_BUILD_CONTEXT: .
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-20.04
 
     steps:
@@ -28,3 +28,10 @@ jobs:
           echo "Docker image build failed!"
           exit 1
         fi
+
+    - name: Run Tests in Container
+      run: |
+        docker run --name mycontainer -d myimage
+        docker exec mycontainer pytest
+        docker stop mycontainer
+        docker rm mycontainer
