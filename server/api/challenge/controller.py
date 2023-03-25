@@ -23,6 +23,7 @@ class ChallengeSchema(BaseModel):
 
 
 class SubmissionSchema(BaseModel):
+    user_id: int
     files: List[FileSchema]
 
 
