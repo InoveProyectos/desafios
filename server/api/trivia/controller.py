@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import uuid
+import json
 import random
 from typing import List
 from pydantic import BaseModel
@@ -34,8 +35,8 @@ class TriviaChallengeController:
         return [trivia_challenge.to_mongo() for trivia_challenge in trivia_challenges]
     
 
-    async def get(self, id):
-        trivia_challenge = TriviaChallenge.objects.get(id=id)
+    async def get(self, id: int):
+        trivia_challenge = TriviaChallenge.objects.get(_id=id)
         return trivia_challenge.to_mongo()
     
 
@@ -47,34 +48,11 @@ class TriviaChallengeController:
 
     
     async def update(self, id, trivia_challenge: TriviaChallengeSchema):
-        trivia_challenge = TriviaChallenge.objects.get(id=id)
+        trivia_challenge = TriviaChallenge.objects.get(_id=id)
         trivia_challenge.update(**challenge)
         return trivia_challenge.to_mongo()
 
     
     async def delete(self, id):
-        trivia_challenge = TriviaChallenge.objects.get(id=id)
+        trivia_challenge = TriviaChallenge.objects.get(_id=id)
         return trivia_challenge.delete().to_mongo()
-    
-    
-    async def create_session(self, id):
-        trivia_challenge = self.get(id)
-        random_id = uuid.uuid4()
-
-        corrects = [i for i in range(len(trivia_challenge.options)) if trivia_challenge.options[i].is_correct]
-        trivia_challenge.options =  self._shuffle_options(trivia_challenge.options)
-        
-        session = self.redis.set(random_id, corrects)
-        if not session:
-            raise RequestException("No se pudo crear la sesión", status_code=500)
-
-        return trivia_challenge
-    
-
-    def _shuffle_options(self, options):
-        random.shuffle(options)
-        return [{"text": option["text"], "index": i} for i, option in enumerate(options, start=1)]
-
-
-    def _without(self, dictionary, key):
-        return {k: v for k, v in dictionary.items() if k != key}
