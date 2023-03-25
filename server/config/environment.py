@@ -22,6 +22,6 @@ connections = {
 
 workers = {
     "pyworker" : {
-        "url": os.environ.get("WORKER_URL", "http://localhost:9001")
+        "url": os.environ.get("PYWORKER_URL", "http://localhost:8000")
     }
 }
