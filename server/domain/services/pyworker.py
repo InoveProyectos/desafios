@@ -3,11 +3,11 @@
 from .service import Service
 from ...config.environment import *
 
-class PyworkerService(Service):
+class Pyworker(Service):
     def __init__(self):
         super().__init__(workers["pyworker"]["url"])
 
-    def test(body):
+    def test(self, body):
         """
         body: {
             "code": str,
@@ -16,5 +16,5 @@ class PyworkerService(Service):
         """ 
         return self.post("/test", body=body)
     
-    def run(body):
-        return self.post("/run-code", body={"code": code, "inputs": inputs})
+    def run(self, body):
+        return self.post("/run-code", body=body)

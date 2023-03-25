@@ -1,8 +1,11 @@
+#!/usr/bin/env python
+
+from typing import List
+from pydantic import BaseModel
+from ...domain.services import Pyworker
 from .model import Challenge, File
 from ..user.model import User, Solution
 from ..user.controller import UserController
-from pydantic import BaseModel
-from typing import List
 
 class FileSchema(BaseModel):
     filename: str
