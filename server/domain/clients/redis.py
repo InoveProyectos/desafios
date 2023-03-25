@@ -18,7 +18,7 @@ class Redis:
     def get(self, key):
         return self._redis.get(key)
     
-    def set(self, key, value, ttl:int=ttl):
+    def set(self, key, value, ttl:int=connections["redis"]["ttl"]):
         """
         ttl: time to live in seconds
         """
