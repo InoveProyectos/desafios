@@ -6,7 +6,7 @@
 - Python >= 3.8
 - [Mongo](https://www.mongodb.com/docs/manual/administration/install-community/)
 - Sugerido - [MongoDB Compass](https://downloads.mongodb.com/compass/mongodb-compass-1.35.0-win32-x64.exe)
-- [Redis](https://redis.io/download/) - _Leer sugerencia en el apartado de levantar la app antes de instalarlo)
+- [Redis](https://redis.io/download/) - Leer sugerencia en el apartado de levantar la app antes de instalarlo)
 - Sugerido - [RedisInsight](https://redis.com/es/redis-enterprise/redisinsight/)
 
 # Levantar la aplicación
