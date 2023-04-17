@@ -85,10 +85,10 @@ class ChallengeController:
 
         UserController()._add_or_replace_solution(
             user_id,
-            Solution(challenge_id=challenge_id, files=solution_files, score_earned=0)) # Acá usar el score que se recibio en el response
+            Solution(challenge_id=challenge_id, files=solution_files, score_earned=0))
 
         """
-        TODO: Retornar resultados de ejecución de la solución. (Response)
+        TODO: Retornar resultados de ejecución de la solución. (response del pyworker)
         """
         return {}
 
@@ -96,7 +96,7 @@ class ChallengeController:
         return {
             "files": challenge.solution,
             "tests": challenge.tests,
-            "clean_db": challenge.clean_db,
-            "encapsulate_in_fn": challenge.encapsulate_in_fn,
-            "avoid_main": challenge.avoid_main
         }
+
+    def _calculate_score(self, pytest_response):
+        raise NotImplementedError
