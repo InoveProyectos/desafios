@@ -26,3 +26,6 @@ app.add_middleware(
 
 app.middleware("http")(response_handler)
 app.include_router(api_router, prefix = "/api")
+
+if mode == "development":
+    from .helpers import fixture

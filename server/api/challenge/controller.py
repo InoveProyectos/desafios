@@ -6,20 +6,26 @@ from ...domain.services import Pyworker
 from .model import Challenge, File
 from ..user.model import User, Solution
 from ..user.controller import UserController
+from ...domain.exceptions import RequestException
 
 class FileSchema(BaseModel):
     filename: str
     type: str
     content: str
 
-
-class ChallengeSchema(BaseModel):
-    name: str
-    solution: List[FileSchema]
-    tests: List[FileSchema]
+class SolutionFileSchema(BaseModel):
+    filename: str
+    type: str
+    content: str
     clean_db: bool = False
     encapsulate_in_fn: bool = False
     avoid_main: bool = False
+
+
+class ChallengeSchema(BaseModel):
+    name: str
+    solution: List[SolutionFileSchema]
+    tests: List[FileSchema]
 
 
 class SubmissionSchema(BaseModel):
@@ -28,6 +34,9 @@ class SubmissionSchema(BaseModel):
 
 
 class ChallengeController:
+
+    def __init__(self):
+        self.pyworker = Pyworker()
 
     async def get_all(self):
         challenges = Challenge.objects.all()
@@ -45,7 +54,7 @@ class ChallengeController:
 
         """
         TODO: Validar la solucion y los tests enviandolo al worker para que se
-        ejecuten. En caso de no ser exitoso, se debe lanzar una excepción (InvalidChallengeException)
+        ejecuten. En caso de no ser exitoso, se debe lanzar una excepción (RequestException)
         """
 
         challenge = Challenge(name=data.name, solution=solutions, tests=tests)
@@ -70,14 +79,24 @@ class ChallengeController:
         challenge.solution = solution_files
 
         """
-        TODO: Validar la solución enviando el challenge al worker. Calcular el score obtenido
+        TODO: Validar la solución enviando el challenge al worker.
+        Si el resultado no es exitoso, arrojar una excepción (InvalidSolutionException)
         """
+
         UserController()._add_or_replace_solution(
-            user_id, 
-            # score_earned
-            Solution(challenge_id=challenge_id, files=solution_files))
+            user_id,
+            Solution(challenge_id=challenge_id, files=solution_files, score_earned=0)) # Acá usar el score que se recibio en el response
 
         """
-        TODO: Retornar resultados de ejecución de la solución.
+        TODO: Retornar resultados de ejecución de la solución. (Response)
         """
         return {}
+
+    def _map_challenge_to_worker(self, challenge):
+        return {
+            "files": challenge.solution,
+            "tests": challenge.tests,
+            "clean_db": challenge.clean_db,
+            "encapsulate_in_fn": challenge.encapsulate_in_fn,
+            "avoid_main": challenge.avoid_main
+        }

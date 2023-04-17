@@ -7,14 +7,8 @@ class Pyworker(Service):
     def __init__(self):
         super().__init__(workers["pyworker"]["url"])
 
-    def test(self, body):
-        """
-        body: {
-            "code": str,
-            "inputs": str
-        }
-        """ 
-        return self.post("/test", body=body)
+    def test(self, code: str, inputs: str = None):
+        return self.post("/test", body=dict(code, inputs))
     
-    def run(self, body):
-        return self.post("/run-code", body=body)
+    def run(self, files, tests, repository=""):
+        return self.post("/run-code", body=dict(files=files, tests=tests, repository=repository))
