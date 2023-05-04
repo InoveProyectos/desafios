@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from redis import Redis as RedisClient
-from ...config.environment import *
+from ...config import *
 
 class Redis:
     def __init__(self):

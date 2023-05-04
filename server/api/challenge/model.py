@@ -9,14 +9,14 @@ from mongoengine import (
   BooleanField,
 )
 
+
 class File(EmbeddedDocument):
     filename = StringField(required=True)
     type = StringField(required=True)
     content = StringField(required=True)
 
-
 class Challenge(Document):
-    _id = SequenceField(required = True, primary_key = True, sequence_name="challenge_sequence")
+    _id = SequenceField(required = True, primary_key = True, unique = True, sequence_name="challenge_sequence")
     name = StringField(required=True)
     solution = EmbeddedDocumentListField(File, required=True)
     tests = EmbeddedDocumentListField(File, required=True)

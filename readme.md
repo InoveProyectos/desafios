@@ -10,6 +10,17 @@
 - Sugerido - [RedisInsight](https://redis.com/es/redis-enterprise/redisinsight/)
 
 # Levantar la aplicación
+### Vía python (recomendado)
+1. Instalar requerimientos
+```bash
+pip install -r requirements.txt
+```
+2. Levantar app
+```bash
+python -m uvicorn server.server:app --host 0.0.0.0 --port 9000 --reload
+```
+
+### Vía docker
 ```bash
 docker-compose up
 ```

@@ -7,6 +7,8 @@ ROOT_DIR = pathlib.Path(__file__).resolve().parent.parent.parent
 
 port = int(os.environ.get("PORT", 9000))
 
+mode = os.environ.get("MODE", "development")
+
 connections = {
     "mongo": {
         "uri": os.environ.get("MONGO_URI", "mongodb://localhost:27017/challenges-dev")

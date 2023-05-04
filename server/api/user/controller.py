@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
 from .model import User
+from functools import reduce
 from pydantic import BaseModel
 
 class UserSchema(BaseModel):
     username: str
-    score: int = 0
-
 
 class UserController:
 
@@ -21,7 +20,7 @@ class UserController:
 
 
     async def create(self, data: UserSchema):
-        user = User(username=data.username, score=0, solutions=[])
+        user = User(username=data.username, solutions=[])
         return user.save().to_mongo()
 
 
@@ -33,6 +32,11 @@ class UserController:
     async def delete(self, user_id):
         user = User.objects.get(_id=user_id)
         return user.delete().to_mongo()
+    
+
+    async def get_score(self, user_id):
+        user = User.objects.get(_id=user_id)
+        return self._calculate_total_score(user)
 
 
     def _add_or_replace_solution(self, user_id, solution):
@@ -45,3 +49,10 @@ class UserController:
         user.solutions.append(solution)
         user.save()
         return user.to_mongo()
+
+
+    def _calculate_total_score(self, user):
+        """
+        Calcular el puntaje total del usuario
+        """
+        return reduce(lambda acc, solution: acc + solution.score, user.solutions, 0)
