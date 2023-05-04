@@ -6,7 +6,7 @@ from .middleware import response_handler
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from mongoengine import connect
+from mongoengine import connect, errors
 
 connect(host = connections['mongo']['uri'])
 
@@ -28,4 +28,7 @@ app.middleware("http")(response_handler)
 app.include_router(api_router, prefix = "/api")
 
 if mode == "development":
-    from .helpers import fixture
+    try:
+        from .helpers import fixture
+    except errors.NotUniqueError:
+        print("fixtures already loaded")

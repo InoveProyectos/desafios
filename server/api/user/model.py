@@ -24,7 +24,6 @@ class Solution(EmbeddedDocument):
 class User(Document):
     _id = SequenceField(required=True, primary_key=True, sequence_name="user_sequence")
     username = StringField(required=True, unique=True)
-    score = IntField(required=True)
     solutions = EmbeddedDocumentListField(Solution, default=[])
 
     meta = {'collection': 'users'}
