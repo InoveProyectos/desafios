@@ -5,8 +5,6 @@ from pydantic import BaseModel
 
 class UserSchema(BaseModel):
     username: str
-    score: int = 0
-
 
 class UserController:
 
@@ -21,7 +19,7 @@ class UserController:
 
 
     async def create(self, data: UserSchema):
-        user = User(username=data.username, score=0, solutions=[])
+        user = User(username=data.username, solutions=[])
         return user.save().to_mongo()
 
 
