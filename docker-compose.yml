@@ -1,7 +1,38 @@
+networks:
+  isolation-network:
+    driver: bridge
+
 services:
   server:
     build: .
-    container_name: desafios
+    container_name: challenges
     volumes:
       - .:/opt/backend/
-    network_mode: "host"
+    networks:
+      - isolation-network
+    ports:
+      - "9000:9000"
+    depends_on:
+      - database
+      - cache
+    environment:
+      MODE: development
+      MONGO_URI: mongodb://database:27017/challenges
+  
+  database:
+    image: mongo:5.0.16
+    container_name: challenges_db
+    networks:
+      - isolation-network
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./data:/data/db
+  
+  cache:
+    image: redis/redis-stack-server:latest
+    container_name: challenges_cache
+    networks:
+      - isolation-network
+    ports:
+      - "6379:6379"
