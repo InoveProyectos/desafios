@@ -18,7 +18,8 @@ services:
     environment:
       MODE: development
       MONGO_URI: mongodb://database:27017/challenges
-  
+      PYWORKER_URL: https://pyworker.inovecode.com/api
+      
   database:
     image: mongo:5.0.16
     container_name: challenges_db
