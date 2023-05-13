@@ -1,8 +1,11 @@
 # Sistema de Desafíos
 
 # Requerimientos
+## Si se quiere levantar con docker
 - Docker
 - docker-compose
+
+## Si se quiere levantar a manopla
 - Python >= 3.8
 - [Mongo](https://www.mongodb.com/docs/manual/administration/install-community/)
 - Sugerido - [MongoDB Compass](https://downloads.mongodb.com/compass/mongodb-compass-1.35.0-win32-x64.exe)
@@ -17,15 +20,18 @@ pip install -r requirements.txt
 ```
 2. Levantar app
 ```bash
-python -m uvicorn server.server:app --host 0.0.0.0 --port 9000 --reload
+python -m uvicorn server.server:app --host 0.0.0.0 --port 9001 --reload
 ```
 
 ### Vía docker
 ```bash
 docker-compose up
 ```
-Para que funcione, es importante que mongo y redis estén funcionando.
-### Opción: Levantar mongo y redis desde docker
+La app estará expuesta en el puerto 9001.
+Al ejecutar este comando se va a levantar también la base de datos y la caché.
+Mongo estará expuesto en el puerto 27018, y redis en 6380
+
+### Opción: Levantar mongo y redis desde docker aparte
 ```bash
 docker run -p 6379:6379 redis/redis-stack-server:latest
 docker run -p 27017:27017 mongo:latest

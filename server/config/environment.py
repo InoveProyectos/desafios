@@ -5,9 +5,10 @@ import pathlib
 
 ROOT_DIR = pathlib.Path(__file__).resolve().parent.parent.parent
 
-port = int(os.environ.get("PORT", 9000))
+port = int(os.environ.get("PORT", 9001))
 
 mode = os.environ.get("MODE", "development")
+debug = mode == "development" or mode == "test"
 
 connections = {
     "mongo": {
