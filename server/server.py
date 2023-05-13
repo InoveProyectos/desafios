@@ -10,7 +10,7 @@ from mongoengine import connect, errors
 
 connect(host = connections['mongo']['uri'])
 
-app = FastAPI(debug=True)
+app = FastAPI(debug=debug, docs_url="/index.html")
 
 origins = [
     "*"
