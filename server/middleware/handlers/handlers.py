@@ -2,9 +2,10 @@
 
 from .errors import mongo, generic
 from mongoengine.errors import ValidationError, NotUniqueError, DoesNotExist
+from ...domain.logger import logger
 
 def map_handler(error):
-    print("ERROR:", error)
+    logger.error(error)
     if isinstance(error, ValidationError):
         return mongo.handle_validation_error
     if isinstance(error, NotUniqueError):

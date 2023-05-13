@@ -37,3 +37,12 @@ services:
       - isolation-network
     ports:
       - "6380:6379"
+
+  log_viewer:
+    image: juliansalinas20/log-viewer:first-tag
+    expose:
+      - "8111"
+    ports:
+      - "8111:8111"
+    volumes:
+      - ./logs:/app
