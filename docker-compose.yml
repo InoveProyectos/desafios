@@ -18,6 +18,7 @@ services:
     environment:
       MODE: development
       MONGO_URI: mongodb://database:27017/challenges
+      REDIS_URI: cache
       PYWORKER_URL: https://pyworker.inovecode.com/api
       
   database:
