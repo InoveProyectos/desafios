@@ -5,7 +5,7 @@ networks:
 services:
   server:
     build: .
-    container_name: challenges
+    container_name: desafios
     volumes:
       - .:/opt/backend/
     networks:
@@ -23,7 +23,7 @@ services:
       
   database:
     image: mongo:5.0.16
-    container_name: challenges_db
+    container_name: desafios_db
     networks:
       - isolation-network
     ports:
@@ -33,7 +33,7 @@ services:
   
   cache:
     image: redis/redis-stack-server:latest
-    container_name: challenges_cache
+    container_name: desafios_cache
     networks:
       - isolation-network
     ports:

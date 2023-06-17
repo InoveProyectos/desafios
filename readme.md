@@ -5,10 +5,17 @@
 - Docker
 - docker-compose
 
+*NOTA: La descarga de la imagen de redis puede fallar, en ese caso ejecutar:
+```bash
+docker pull redis/redis-stack-server
+```
+
 ## Si se quiere levantar a manopla
 - Python >= 3.8
 - [Mongo](https://www.mongodb.com/docs/manual/administration/install-community/)
-- Sugerido - [MongoDB Compass](https://downloads.mongodb.com/compass/mongodb-compass-1.35.0-win32-x64.exe)
+- Sugerido
+    - [MongoDB Compass Win](https://downloads.mongodb.com/compass/mongodb-compass-1.35.0-win32-x64.exe)
+    - [MongoDB Compass Linux](https://downloads.mongodb.com/compass/mongodb-compass_1.37.0_amd64.deb)
 - [Redis](https://redis.io/download/) - Leer sugerencia en el apartado de levantar la app antes de instalarlo)
 - Sugerido - [RedisInsight](https://redis.com/es/redis-enterprise/redisinsight/)
 
