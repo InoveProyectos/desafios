@@ -2,9 +2,9 @@
 
 from ..api.challenge.model import Challenge, File
 from ..api.user.model import User
+from ..api.trivia.model import TriviaChallenge
 
 ### example mongo challenge ###
-
 challenge = Challenge(
     _id=1,
     name='Mi primer Challenge',
@@ -30,11 +30,10 @@ challenge = Challenge(
 try:
     challenge.save()
     print("Saved challenge:", challenge.to_mongo())
-except:
-    print("Fixture challenge already exists")
+except Exception as e:
+    print("Could not save challenge:", e)
 
 ### example mongo user ###
-
 user = User(
     username='tester',
     solutions=[]
@@ -43,5 +42,31 @@ user = User(
 try:
     user.save()
     print("Saved user:", user.to_mongo())
-except:
-    print("Fixture user already exists")
+except Exception as e:
+    print("Could not save user:", e)
+
+### example trivia challenge ###
+trivia = TriviaChallenge(
+  name = "Como declaras una variable?",
+  statement = "Selecciona el codigo correcto",
+  options = [
+    {
+      "text": "numero = 1",
+      "is_correct": True
+    },
+    {
+      "text": "int numero = 1",
+      "is_correct": False
+    },
+        {
+      "text": "numero == 1",
+      "is_correct": False
+    }
+  ]
+)
+
+try:
+    trivia.save()
+    print("Saved trivia:", trivia.to_mongo())
+except Exception as e:
+    print("Could not save trivia:", e)
