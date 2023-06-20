@@ -71,7 +71,7 @@ class SessionController:
 
 
     def _evaluate(self, session, answers: List[AnswerSchema]):
-        return [dict(id=answer.id, score=self._calculate_score(session.get("corrects"), answer.selected)) for answer in answers]
+        return [dict(id=answer.id, score=self._calculate_score(session.get("corrects"), answer.selected), selected=answer.selected, corrects=session.get("corrects")) for answer in answers]
 
 
     def _calculate_score(self, corrects, selected):
